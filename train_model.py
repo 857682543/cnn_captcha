@@ -44,9 +44,12 @@ class TrainModel(CNN):
 
         # 获得图片宽高和字符长度基本信息
         label, captcha_array = self.gen_captcha_text_image(train_img_path, self.train_images_list[0])
+        # print(label, captcha_array)
 
         captcha_shape = captcha_array.shape
+        # print(captcha_shape)
         captcha_shape_len = len(captcha_shape)
+        # print(captcha_shape_len)
         if captcha_shape_len == 3:
             image_height, image_width, channel = captcha_shape
             self.channel = channel
@@ -158,6 +161,7 @@ class TrainModel(CNN):
             init = tf.global_variables_initializer()
             sess.run(init)
             # 恢复模型
+            # print(os.path.exists(self.model_save_dir), "xieshiyu")
             if os.path.exists(self.model_save_dir):
                 try:
                     saver.restore(sess, self.model_save_dir)
@@ -238,7 +242,7 @@ class TrainModel(CNN):
 
 
 def main():
-    with open("conf/sample_config.json", "r") as f:
+    with open("/Users/adks/Desktop/AmazonSpider/captcha_recognize/cnn_captcha/cnn_captcha/conf/sample_config.json", "r") as f:
         sample_conf = json.load(f)
 
     train_image_dir = sample_conf["train_image_dir"]
@@ -254,7 +258,7 @@ def main():
     test_batch_size = sample_conf['test_batch_size']
 
     if use_labels_json_file:
-        with open("tools/labels.json", "r") as f:
+        with open("/Users/adks/Desktop/AmazonSpider/captcha_recognize/cnn_captcha/cnn_captcha/tools/labels.json", "r") as f:
             char_set = f.read().strip()
     else:
         char_set = sample_conf["char_set"]

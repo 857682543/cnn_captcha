@@ -3,9 +3,9 @@
 构建flask接口服务
 接收 files={'image_file': ('captcha.jpg', BytesIO(bytes), 'application')} 参数识别验证码
 需要配置参数：
-    image_height = 40
-    image_width = 80
-    max_captcha = 4
+    image_height = 70
+    image_width = 200
+    max_captcha = 6
 """
 import json
 from io import BytesIO
@@ -56,10 +56,11 @@ def response_headers(content):
 
 @app.route('/b', methods=['POST'])
 def up_image():
-    if request.method == 'POST' and request.files.get('image_file'):
+    # print(request.data)
+    if request.method == 'POST':
         timec = str(time.time()).replace(".", "")
-        file = request.files.get('image_file')
-        img = file.read()
+        img = request.data
+        # img = file.read()
         img = BytesIO(img)
         img = Image.open(img, mode="r")
         # username = request.form.get("name")
